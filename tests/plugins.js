@@ -182,6 +182,25 @@ exports.plugin_paths = {
         test.done();
     },
 
+    'INSTALLED plugins private scope plugin: (@bitzesty/private_plugin)': function (test) {
+        process.env.HARAKA = path.resolve(__dirname, '..', 'tests', 'installation');
+
+        var p = new plugin.Plugin('@bitzesty/private_plugin');
+
+        test.expect(3);
+        test.equal(p.plugin_path, path.resolve(__dirname, 'installation', 'plugins', '@bitzesty', 'private_plugin', 'package.json'));
+        test.ok(p.hasPackageJson);
+        try {
+            p._compile();
+            test.ok(true, "compiles OK");
+        }
+        catch (e) {
+            console.error(e.stack);
+            test.ok(false, "compiles OK");
+        }
+        test.done();
+    },
+
     'Inheritance: (inherits)': function (test) {
         process.env.HARAKA = path.resolve(__dirname, '..', 'tests', 'installation');
 
